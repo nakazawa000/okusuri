@@ -12,10 +12,41 @@
   <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
   <link rel="stylesheet" href="css/style.css">
 
-  
+  <script>
+    ons.ready(function() {
+      console.log("Onsen UI is ready!");
+    });
+
+    document.addEventListener('show', function(event) {
+      var page = event.target;
+      var titleElement = document.querySelector('#toolbar-title');
+
+      if (page.matches('#first-page')) {
+        titleElement.innerHTML = 'My app - Page 1';
+      } else if (page.matches('#second-page')) {
+        titleElement.innerHTML = 'My app - Page 2';
+      }
+    });
+
+    if (ons.platform.isIPhoneX()) {
+      document.documentElement.setAttribute('onsflag-iphonex-portrait', '');
+      document.documentElement.setAttribute('onsflag-iphonex-landscape', '');
+    }
+  </script>
 </head>
 <body>
  <ons-navigator page="home.html" id="navi">
  </ons-navigator>
+ <ons-toolbar>
+      <div class="center" id="toolbar-title"></div>
+    </ons-toolbar>
+    <ons-tabbar position="auto">
+      <ons-tab label="HOME" page="home.html" active>
+      </ons-tab>
+      <ons-tab label="カレンダー" page="calendar.html">
+      </ons-tab>
+      <ons-tab label="お薬設定" page="setting.html">
+      </ons-tab>
+    </ons-tabbar>
 </body>
 </html>
