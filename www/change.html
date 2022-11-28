@@ -128,10 +128,10 @@
         </div>
 
         <p style="text-align: center">
-            <ons-button id ="" onclick="app.showFromTemplate()">変更</ons-button>
+            <ons-button id ="changebutton" onclick="app.showFromTemplate()" disabled>変更</ons-button>
         </p>
         <p style="text-align: center">
-            <ons-button id ="" onclick="app.showFromTemplate2()">削除</ons-button>
+            <ons-button id ="delbutton" onclick="app.showFromTemplate2()" disabled>削除</ons-button>
         </p>
     </ons-page>
 
@@ -154,10 +154,17 @@
 
         <script>
         var serect="";/* 何個目か*/ 
+        var changebutton = document.getElementById('changebutton');
+        var delbutton = document.getElementById('delbutton');
         function isSerect(obj){ /* プルダウンで選んだ時 */
             serect  = obj.value; /* 何個目か*/ 
+
+            
             if(serect == "選択してください") {/* 初期 */
                 nullvalue(); 
+                
+                changebutton.disabled = "disabled";/* 変更ボタンが押せない */
+                delbutton.disabled = "disabled";/* 削除ボタンが押せない */
             } else {
                 object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身 */
                 drugname.value=object.name;
@@ -165,6 +172,9 @@
                 drugamount.value=object.amount;
                 drugtaking.value=object.taking;
                 drugweight.value=object.weight;
+
+                changebutton.disabled = null;/* 変更ボタンが押せる */
+                delbutton.disabled = null;/* 削除ボタンが押せる */
             }
         }
 
@@ -203,8 +213,7 @@
             localStorage.removeItem(localsum);/* ストレージの最後を削除 */
             localsum = localsum -1;/* ストレージの数をー１ */
             localStorage.setItem("localsum", localsum);
-            example();/* プルダウン更新 */
-            nullvalue();/* 内容を空白に */
+             location.href = 'setting.html';/* 確認画面に */
         };
 
         function isRegNum(obj){ /* 半角数字数字かどうか */
