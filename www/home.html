@@ -1,5 +1,33 @@
 <ons-page>
-    <ons-toolbar>
-      <div class="center" id="toolbar-title"></div>
-    </ons-toolbar>
-  </ons-page>
+    <script>
+         localStorage.setItem("localsum", 1);/* 保存回数が１ /
+                    drugobject = {/ お薬情報の連想配列 /
+                        name: drugname.value,/ お薬名 /
+                        day: drugday.value,/ 処方日 /
+                        amount: drugamount.value,/ 処方量 /
+                        taking: drugtaking.value,/ 服用間隔 /
+                        weight: drugweight.value/ 服用量 /
+                    }
+                    localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
+function saveDate() {
+  var day = new Date();
+  'year',day.getFullYear();
+  'month',(day.getMonth()+1));
+  'date',day.getDate());
+}
+
+localStorage.setItem("localday", 2);/* 保存回数が１ /
+                    dayobject = {/ 日付情報の連想配列 /
+                        calenderday: drugday.value,/ 記録日 /
+                        calenderflag: drugamount.value,/ フラグ(0or1) /
+                    }
+                    localStorage.setItem(localsum, JSON.stringify(dayobject));/ ストレージにお薬情報を保存 */
+    </script>
+    <script>
+        
+    </script>
+    <div id ="kuma">
+        <img id ="mainimg" src="images/sirokuma.png">
+    </div>
+    <ons-button onclick="saveDate();ugoku()">飲めた！</ons-button>
+</ons-page>
