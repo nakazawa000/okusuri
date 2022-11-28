@@ -1,2 +1,14 @@
-/**/
+/*メイン画面*/
+body{
+    text-align: center;
+}
 
+img {
+ max-width: 100%;
+ height: auto;
+}
+.main{
+    display:inline-block;
+    text-align: center;
+    padding: 8px
+}
