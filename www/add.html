@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    
+    <script>
+        window.onload = function(){
+            //今日の日付データを変数hidukeに格納
+            const hiduke=new Date(); 
+
+            //年・月・日・曜日を取得する
+            const year = hiduke.getFullYear();
+            const month = hiduke.getMonth()+1;
+            const day = hiduke.getDate();
+            document.getElementById('drugday').value = year + "-" + month + "-" + day;
+        }
+
+        //確認画面のjs
+        var app = {};
+        ons.ready(function () {
+        ons.createElement('action-sheet.html', { append: true })
+            .then(function (sheet) {
+            app.showFromTemplate = sheet.show.bind(sheet);
+            app.hideFromTemplate = sheet.hide.bind(sheet);
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+    <ons-page>
+        <ons-toolbar>
+             <ons-back-button onclick="location.href='setting.html'">前のページへ</ons-back-button> <!--戻るボタン-->
+            <div class="center">お薬設定</div><!--上の表示-->
+        </ons-toolbar>
+
+        <div style="padding: 1px 1px 1px 1px;">
+            <div class="card">
+                <!--カード-->
+                <div class="card__content">
+                    <ul class="list">
+                        <!--リスト-->
+                        <li class="list-item"><!--薬名-->
+                            お薬名 ：
+                            <div class="list-item__center">
+                            <input id="drugname" type="text" class="text-input" placeholder="お薬名" >
+                            </div>
+                        </li>
+                        <li class="list-item"><!--処方日-->
+                            処方日 ：
+                            <div class="list-item__center">
+                            <input id="drugday" type="date" class="text-input">
+                            </div>
+                        </li>
+
+                        <li class="list-item"><!--処方量-->
+                            処方量 ：
+                            <div class="list-item__center">
+                            <input id="drugamount" type="text" class="text-input" placeholder="O日分"
+                            onchange="isRegNum(this)">
+                            </div>
+                        </li>
+
+                        <li class="list-item"><!--服用間隔-->
+                            服用間隔：
+                            <div class="list-item__center">
+                            <input id="drugtaking" type="text" class="text-input" placeholder="朝・昼・晩">
+                            </div>
+                        </li>
+
+                        <li class="list-item"><!--服用量-->
+                            服用量  ：
+                            <div class="list-item__center">
+                            <input id="drugweight" type="text" class="text-input" placeholder="O錠" onchange="isRegNum(this)"><!--変えたとき-->
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <p style="text-align: center">
+            <ons-button id ="" onclick="app.showFromTemplate()">確定</ons-button>
+        </p>
+
+    </ons-page>
+
+    <!--確認画面の詳細-->
+    <template id="action-sheet.html">
+        <ons-action-sheet id="" cancelable title="確認画面">
+            <!--確認ボタンでクリックしたとき-->
+            <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate();butotnClick()" >確定</ons-action-sheet-button>
+            <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate()" modifier="destructive">取り消し</ons-action-sheet-button>
+            <ons-action-sheet-button icon="md-close" onclick="app.hideFromTemplate()">Cancel</ons-action-sheet-button>
+        </ons-action-sheet>
+    </template>
+
+        <script>
+        function butotnClick(){ /* 確認ボタンを押したときに動く */
+            if(!drugname.value || !drugday.value || !drugamount.value || !drugtaking.value || !drugweight.value){ /* 空白があるか */
+                alert('エラー：空白があります'); /* 空白があるとき */
+            }else{
+                /* 空白がないとき */
+                alert('登録完了：\nお薬名：'+drugname.value +'\n処方日：'+ drugday.value +'\n処方量：'+ drugamount.value +'日分'+'\n服用間隔：'+ drugtaking.value +'\n服用量：'+ drugweight.value +'錠');/* 入力内容確認*/
+
+                var localsum = Number(localStorage.getItem('localsum'));/* 何回保存したか */
+                var drugobject = [];/* お薬情報の連想配列 */
+
+                if(!localsum){/* 保存がないとき*/
+                    localStorage.setItem("localsum", 1);/* 保存回数＋１ */
+                    localsum = 1;
+                    drugobject = {/* お薬情報の連想配列 */
+                        name: drugname.value,/* お薬名 */
+                        day: drugday.value,/* 処方日 */
+                        amount: drugamount.value,/* 処方量 */
+                        taking: drugtaking.value,/* 服用間隔 */
+                        weight: drugweight.value/* 服用量 */
+                    }
+                    localStorage.setItem(localsum, JSON.stringify(drugobject));/* ストレージにお薬情報を保存 */
+
+                    drugname.value="";/* テキストの中を空に */
+                    drugday.value="";
+                    drugamount.value="";
+                    drugtaking.value="";
+                    drugweight.value="";
+
+                } else {/* 保存が２回目以降の時 */
+                    localsum += 1;/* 保存回数＋１ */
+                    localStorage.setItem("localsum", localsum);
+                    drugobject = {
+                        name: drugname.value,
+                        day: drugday.value,
+                        amount: drugamount.value,
+                        taking: drugtaking.value,
+                        weight: drugweight.value
+                    }
+                    localStorage.setItem(localsum, JSON.stringify(drugobject));
+                    
+                     drugname.value="";
+                    drugday.value="";
+                    drugamount.value="";
+                    drugtaking.value="";
+                    drugweight.value="";
+                }
+
+            }
+        };
+
+        function isRegNum(obj){ /* 半角数字数字かどうか */
+            var str=obj.value; /* 入力値 */
+            if(str.match(/[^0-9]/g)){ /* 数値以外の文字列が含まれていた場合 */
+                 alert ('エラー：半角数字を入力してください'); 
+                 /* str.match(/[^0-9]/g)+'\n\n数値以外が含まれています' アラート表示*/ 
+                obj.value=""; /* テキストボックスを空にする */
+                return false;
+            }
+        }
+
+       let drugname = document.getElementById('drugname');/* 薬名 */
+       let drugday = document.getElementById('drugday');/* 処方日 */
+       let drugamount = document.getElementById('drugamount');/* 処方量 */
+       let drugtaking = document.getElementById('drugtaking');/* 処方間隔 */
+       let drugweight = document.getElementById('drugweight');/* 処方量 */
+
+    </script>
+</body>
+</html>

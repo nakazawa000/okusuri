@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+
+    <script>
+
+        window.onload = function(){/* ロードされたとき */
+            var card_basis= document.getElementById('card_basis');
+            var add_code = "";
+
+            //localStorage.clear();
+
+            var localsum = localStorage.getItem('localsum');
+            var object ;
+            
+            if(!localsum){/* 保存がないとき*/
+                add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content"><h2>お薬情報を入力してください</h2></div></div>';
+            }else {
+                for(var i=1; i<=localsum; i++) {
+                    object = JSON.parse(localStorage.getItem(i));
+
+                    add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content">お薬名： ' + object.name +'</div> <div class="card__content">残り  ：  ' + object.weight +' </div> <div class="card__content">時間  ：  ' + object.taking +'</div></div></div> ';
+                    }
+            }
+            card_basis.innerHTML = add_code;
+        }
+    </script>
+</head>
+<body>
+  <ons-page>
+        <ons-toolbar>
+            <div class="center">お薬管理</div>
+        </ons-toolbar>
+        <div id="card_basis">
+
+        </div>
+
+        <p></p>
+        <ons-button modifier="large" onclick="location.href='add.html'">追加</ons-button>
+        <ons-button modifier="large" onclick="location.href='change.html'">変更・削除</ons-button>
+  </ons-page>
+</body>
+</html>
