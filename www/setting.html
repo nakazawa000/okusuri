@@ -14,7 +14,7 @@
 
     <script>
 
-        window.onload = function(){/* ロードされたとき */
+        window.onload = function() {/* ロードされたとき */
             var card_basis= document.getElementById('card_basis');
             var add_code = "";
 
@@ -22,7 +22,6 @@
 
             var localsum = localStorage.getItem('localsum');
             var object ;
-            
             if(!localsum){/* 保存がないとき*/
                 add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content"><h2>お薬情報を入力してください</h2></div></div>';
             }else {
