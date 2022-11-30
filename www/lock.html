@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function(){
+            // (1)パスワード入力欄とボタンのHTMLを取得
+            let btn_passview = document.getElementById("btn_passview");
+            let input_pass = document.getElementById("input_pass");
+            // (2)ボタンのイベントリスナーを設定
+            btn_passview.addEventListener("click", (e)=>{
+                // (3)ボタンの通常の動作をキャンセル（フォーム送信をキャンセル）
+                e.preventDefault();
+                // (4)パスワード入力欄のtype属性を確認
+                if( input_pass.type === 'password' ) {
+                    // (5)パスワードを表示する
+                    input_pass.type = 'text';
+                    btn_passview.textContent = '非表示';
+                } else {
+                    // (6)パスワードを非表示にする
+                    input_pass.type = 'password';
+                    btn_passview.textContent = '表示';
+                }
+            });
+
+        });
+
+        function isNum(num){
+            var num=num.textContent; /* 入力値 */
+            var input_pass = document.getElementById("input_pass");
+            input_pass.value += num;
+                 //alert (num); 
+        };
+
+        function lockcheck(){
+          var input_pass = document.getElementById("input_pass");
+          var lock = localStorage.getItem('lock');
+          var hrefcheck = localStorage.getItem('hrefcheck');
+          if(input_pass.value == lock){ 
+            if(hrefcheck == 1){ 
+                location.href='add.html';
+            } else if(hrefcheck == 2){ 
+                location.href='change.html';
+            } 
+          } else {
+                alert("エラー");
+                input_pass.value = "";
+            }
+                 //alert (num); 
+        };
+    </script>
+</head>
+<body>
+    <!-- TODO: Please edit here -->
+      <ons-page>
+        <ons-toolbar>
+         <ons-back-button onclick="location.href='index.html'">前のページへ</ons-back-button> <!--戻るボタン-->
+            <div class="center">ロック画面</div>
+        </ons-toolbar>
+        
+        <div id="card_basis">
+            <label for="input_color">パスワード</label><br>
+            <input type="password" id="input_pass" name="input_pass" value="" size="4" >
+            <button id="btn_passview">表示</button><br>
+            <button class="button button--cta" id="check" onclick="isNum(this)">1</button>
+            <button class="button button--cta" id="check" onclick="isNum(this)">2</button>
+            <button class="button button--cta" id="check" onclick="isNum(this)">3</button><br>
+            <button class="button button--cta" id="check" onclick="isNum(this)">4</button>
+            <button class="button button--cta" id="check" onclick="isNum(this)">5</button>
+            <button class="button button--cta" id="check" onclick="isNum(this)">6</button><br>
+            <button class="button button--cta" id="check" onclick="isNum(this)">7</button>
+            <button class="button button--cta" id="check" onclick="isNum(this)">8</button>
+            <button class="button button--cta" id="check" onclick="isNum(this)">9</button>
+
+            <p><button class="button button--cta" id="check" onclick="lockcheck()">確定</button></p>
+
+            <p><button class="button button--cta" id="check" onclick="location.href='lockadd.html'">パスワード登録・更新画面へ</button></p>
+      </div>
+</ons-page>
+    
+</body>
+</html>

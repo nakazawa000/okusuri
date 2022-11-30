@@ -37,11 +37,14 @@
         }
 
         function nullvalue(){/* 内容をかを空にする関数 */
+            const chk = document.drugtaking.chk;
             drugname.value="";
             drugday.value="";
             drugamount.value="";
-            drugtaking.value="";
             drugweight.value="";
+            for (let i = 0; i < chk.length; i++) {
+                chk[i].checked = false;
+            }
         }
 
         //確認画面のjs
@@ -110,11 +113,49 @@
                         </li>
 
                         <li class="list-item"><!--服用間隔-->
-                            服用間隔：
-                            <div class="list-item__center">
+                            服用間隔：　　　
+                            <!--<div class="list-item__center">
                             <input id="drugtaking" type="text" class="text-input" placeholder="朝・昼・晩">
-                            </div>
+                            </div>-->
+                            <form class="list-item__center" id="drugtaking" name="drugtaking">
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="朝">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                朝　　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="昼">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                昼　　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="夜">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                夜　　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="食前">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                食前　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="食後">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                食後　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="食間">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                食間　
+                            </label>
+                          <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="就寝前">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                就寝前
+                            </label>
+                            </form>
                         </li>
+
 
                         <li class="list-item"><!--服用量-->
                             服用量  ：
@@ -128,10 +169,10 @@
         </div>
 
         <p style="text-align: center">
-            <ons-button id ="" onclick="app.showFromTemplate()">変更</ons-button>
+            <ons-button id ="changebutton" onclick="app.showFromTemplate()" disabled>変更</ons-button>
         </p>
         <p style="text-align: center">
-            <ons-button id ="" onclick="app.showFromTemplate2()">削除</ons-button>
+            <ons-button id ="delbutton" onclick="app.showFromTemplate2()" disabled>削除</ons-button>
         </p>
     </ons-page>
 
@@ -154,10 +195,17 @@
 
         <script>
         var serect="";/* 何個目か*/ 
+        var changebutton = document.getElementById('changebutton');
+        var delbutton = document.getElementById('delbutton');
         function isSerect(obj){ /* プルダウンで選んだ時 */
             serect  = obj.value; /* 何個目か*/ 
+
+            
             if(serect == "選択してください") {/* 初期 */
                 nullvalue(); 
+                
+                changebutton.disabled = "disabled";/* 変更ボタンが押せない */
+                delbutton.disabled = "disabled";/* 削除ボタンが押せない */
             } else {
                 object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身 */
                 drugname.value=object.name;
@@ -165,15 +213,32 @@
                 drugamount.value=object.amount;
                 drugtaking.value=object.taking;
                 drugweight.value=object.weight;
+                const chk = document.drugtaking.chk;
+                for (let i = 0; i < chk.length; i++) {
+                    if (object.taking.indexOf(chk[i].value) !== -1) {//(chk1[i].checked === true)と同じ
+                    chk[i].checked = true;
+                }
+            }
+
+                changebutton.disabled = null;/* 変更ボタンが押せる */
+                delbutton.disabled = null;/* 削除ボタンが押せる */
             }
         }
 
         function changeClick(){ /* 確認ボタンを押したときに動く */
-            if(!drugname.value || !drugday.value || !drugamount.value || !drugtaking.value || !drugweight.value){ /* 空白があるか */
+                const arr = [];
+                const chk = document.drugtaking.chk;
+
+            for (let i = 0; i < chk.length; i++) {
+                if (chk[i].checked) {//(chk1[i].checked === true)と同じ
+                    arr.push(chk[i].value);
+                }
+            }
+            if(!drugname.value || !drugday.value || !drugamount.value || arr=="" || !drugweight.value){ /* 空白があるか */
                 alert('エラー:空白があります'); /* 空白があるとき */
             }else{
                 /* 空白がないとき */
-                alert('上書き保存完了\nお薬名：'+drugname.value +'\n処方日：'+ drugday.value +'\n処方量：'+ drugamount.value +'日分'+'\n服用間隔：'+ drugtaking.value +'\n服用量：'+ drugweight.value +'錠');/* 入力内容確認*/
+                alert('上書き保存完了\nお薬名：'+drugname.value +'\n処方日：'+ drugday.value +'\n処方量：'+ drugamount.value +'日分'+'\n服用間隔：'+ arr +'\n服用量：'+ drugweight.value +'錠');/* 入力内容確認*/
 
                 var localsum = Number(localStorage.getItem('localsum'));/* 何回保存したか */
                 var drugobject = [];/* お薬情報の連想配列 */
@@ -181,8 +246,9 @@
                         name: drugname.value,
                         day: drugday.value,
                         amount: drugamount.value,
-                        taking: drugtaking.value,
-                        weight: drugweight.value
+                        taking: arr,
+                        weight: drugweight.value,
+                        total:Number(drugamount.value)*Number(drugweight.value)*arr.length/* 合計薬量 */
                     }
                 localStorage.setItem(serect, JSON.stringify(drugobject));
                 example();/* プルダウン更新 */
@@ -203,8 +269,7 @@
             localStorage.removeItem(localsum);/* ストレージの最後を削除 */
             localsum = localsum -1;/* ストレージの数をー１ */
             localStorage.setItem("localsum", localsum);
-            example();/* プルダウン更新 */
-            nullvalue();/* 内容を空白に */
+             location.href = 'index.html';/* 確認画面に */
         };
 
         function isRegNum(obj){ /* 半角数字数字かどうか */
@@ -220,7 +285,6 @@
        let drugname = document.getElementById('drugname');/* 薬名 */
        let drugday = document.getElementById('drugday');/* 処方日 */
        let drugamount = document.getElementById('drugamount');/* 処方量 */
-       let drugtaking = document.getElementById('drugtaking');/* 処方間隔 */
        let drugweight = document.getElementById('drugweight');/* 処方量 */
 
     </script>

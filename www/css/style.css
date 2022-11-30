@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 /*メイン画面*/
 
 body{
@@ -25,6 +24,9 @@ img {
 
 
 /* HOME画面_時計 */
-/* p {
-        font-family: 'Sacramento', cursive;
-} */
+span#time {
+        font-family: 'Comic Sans MS';
+        outline-color: #ffffe0;
+        outline-style: dashed;
+        outline-width: 3px;
+}
