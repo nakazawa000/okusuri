@@ -192,7 +192,8 @@
                         day: drugday.value,
                         amount: drugamount.value,
                         taking: drugtaking.value,
-                        weight: drugweight.value
+                        weight: drugweight.value,
+                        total:Number(drugamount.value)*Number(drugweight.value)*arr.length/* 合計薬量 */
                     }
                 localStorage.setItem(serect, JSON.stringify(drugobject));
                 example();/* プルダウン更新 */
@@ -213,7 +214,7 @@
             localStorage.removeItem(localsum);/* ストレージの最後を削除 */
             localsum = localsum -1;/* ストレージの数をー１ */
             localStorage.setItem("localsum", localsum);
-             location.href = 'setting.html';/* 確認画面に */
+             location.href = 'index.html';/* 確認画面に */
         };
 
         function isRegNum(obj){ /* 半角数字数字かどうか */
