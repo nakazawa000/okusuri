@@ -29,26 +29,37 @@
                 for(var i=1; i<=localsum; i++) {
                     object = JSON.parse(localStorage.getItem(i));
 
-                    add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content">お薬名： ' + object.name +'</div> <div class="card__content">残り  ：  ' + object.weight +' </div> <div class="card__content">時間  ：  ' + object.taking +'</div></div></div> ';
+                    add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content">お薬名： ' + object.name +'</div> <div class="card__content">残り  ：  ' + object.total +' </div> <div class="card__content">時間  ：  ' + object.taking +'</div></div></div> ';
                     }
                 changebutton.disabled = null;/* 変更ボタンが押せる */
             }
             card_basis.innerHTML = add_code;
         }
+
+                function hrefadd(){ /* 追加ボタンを押したときに動く */
+            localStorage.setItem("hrefcheck", 1);
+        };
+
+         function hrefcheck(){ /* 変更ボタンを押したときに動く */
+            localStorage.setItem("hrefcheck", 2);
+        };
     </script>
 </head>
 <body>
   <ons-page>
         <ons-toolbar>
             <div class="center">お薬管理</div>
+                <div class="toolbar__right">
+                    <span class="toolbar-button toolbar-button--outline">時間設定</span>
+                </div>
         </ons-toolbar>
         <div id="card_basis">
 
         </div>
 
         <p></p>
-        <ons-button modifier="large" onclick="location.href='add.html'">追加</ons-button>
-        <ons-button modifier="large" id="changebutton" onclick="location.href='change.html'" disabled>変更・削除</ons-button>
+        <ons-button modifier="large" onclick="location.href='lock.html';hrefadd()">追加</ons-button>
+        <ons-button modifier="large" id="changebutton" onclick="location.href='lock.html';hrefcheck()" disabled>変更・削除</ons-button>
   </ons-page>
 </body>
 </html>
