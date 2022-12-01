@@ -12,10 +12,9 @@
     
     <script>
          document.addEventListener('show', function(){
-            alert("a");
             var hour_basis= document.getElementById('hour_basis');
             var minute_basis= document.getElementById('minute_basis');
-            var add_code = ;
+            var add_code = '';
             //var localsum = localStorage.getItem('localsum');
             //var object ;
 
@@ -28,7 +27,7 @@
                 add_code += '<option value = "' + i + '">' + i +'</option>';
             }
             minute_basis.innerHTML = add_code;
-        })
+        });
     </script>
 </head>
 <body>

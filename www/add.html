@@ -17,8 +17,8 @@
 
             //年・月・日・曜日を取得する
             const year = hiduke.getFullYear();
-            const month = hiduke.getMonth()+1;
-            const day = hiduke.getDate();
+            const month = ("0"+(hiduke.getMonth()+1)).slice(-2);
+            const day =  ("0"+hiduke.getDate()).slice(-2);
             document.getElementById('drugday').value = year + "-" + month + "-" + day;
         }
 
