@@ -28,7 +28,7 @@ localStorage.setItem("localday", 2);/* 保存回数が１ /
     <div id = "timeText">
         <span id="time"></span>
 
-        <script type="text/javascript">
+        <script type="text/javascript" style="font-family: 'Georgia', cursive;">
             function showTime() {
                 var now = new Date();
                 var nowhour =("0" + (now.getHours())).slice(-2);
@@ -36,7 +36,7 @@ localStorage.setItem("localday", 2);/* 保存回数が１ /
                 var nowseconds = now.getSeconds();
             
                 var text = nowhour + "：" + nowminutes; 
-                document.getElementById('time').innerHTML = text;
+                document.getElementById('time').innerHTML =text;
             
             }
             setInterval(showTime,1000);

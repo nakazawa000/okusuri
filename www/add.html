@@ -70,10 +70,47 @@
                         </li>
 
                         <li class="list-item"><!--服用間隔-->
-                            服用間隔：
-                            <div class="list-item__center">
+                            服用間隔：　　　
+                            <!--<div class="list-item__center">
                             <input id="drugtaking" type="text" class="text-input" placeholder="朝・昼・晩">
-                            </div>
+                            </div>-->
+                            <form class="list-item__center" id="drugtaking" name="drugtaking">
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="朝">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                朝　　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="昼">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                昼　　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="夜">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                夜　　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="食前">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                食前　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="食後">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                食後　
+                            </label>
+                            <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="食間">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                食間　
+                            </label>
+                          <label class="checkbox checkbox--material">
+                                <input type="checkbox" class="checkbox__input checkbox--material__input" name="chk" value="就寝前">
+                                <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                                就寝前
+                            </label>
+                            </form>
                         </li>
 
                         <li class="list-item"><!--服用量-->
@@ -104,12 +141,22 @@
     </template>
 
         <script>
-        function butotnClick(){ /* 確認ボタンを押したときに動く */
-            if(!drugname.value || !drugday.value || !drugamount.value || !drugtaking.value || !drugweight.value){ /* 空白があるか */
+        function butotnClick(){
+                const arr = [];
+                const chk = document.drugtaking.chk;
+
+            for (let i = 0; i < chk.length; i++) {
+                if (chk[i].checked) {//(chk1[i].checked === true)と同じ
+                    arr.push(chk[i].value);
+                }
+            }
+            //document.getElementById("span1").textContent = arr;
+            /* 確認ボタンを押したときに動く */
+            if(!drugname.value || !drugday.value || !drugamount.value || arr=="" || !drugweight.value){ /* 空白があるか */
                 alert('エラー：空白があります'); /* 空白があるとき */
             }else{
                 /* 空白がないとき */
-                alert('登録完了：\nお薬名：'+drugname.value +'\n処方日：'+ drugday.value +'\n処方量：'+ drugamount.value +'日分'+'\n服用間隔：'+ drugtaking.value +'\n服用量：'+ drugweight.value +'錠');/* 入力内容確認*/
+                alert('登録完了：\nお薬名：'+drugname.value +'\n処方日：'+ drugday.value +'\n処方量：'+ drugamount.value +'日分'+'\n服用間隔：'+ arr +'\n服用量：'+ drugweight.value +'錠');/* 入力内容確認*/
 
                 var localsum = Number(localStorage.getItem('localsum'));/* 何回保存したか */
                 var drugobject = [];/* お薬情報の連想配列 */
@@ -121,8 +168,9 @@
                         name: drugname.value,/* お薬名 */
                         day: drugday.value,/* 処方日 */
                         amount: drugamount.value,/* 処方量 */
-                        taking: drugtaking.value,/* 服用間隔 */
-                        weight: drugweight.value/* 服用量 */
+                        taking: arr,/* 服用間隔 */
+                        weight: drugweight.value,/* 服用量 */
+                        total:Number(drugamount.value)*Number(drugweight.value)*arr.length/* 合計薬量 */
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/* ストレージにお薬情報を保存 */
 
@@ -139,16 +187,19 @@
                         name: drugname.value,
                         day: drugday.value,
                         amount: drugamount.value,
-                        taking: drugtaking.value,
-                        weight: drugweight.value
+                        taking: arr,
+                        weight: drugweight.value,
+                        total:Number(drugamount.value)*Number(drugweight.value)*arr.length/* 合計薬量 */
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));
                     
                      drugname.value="";
                     drugday.value="";
                     drugamount.value="";
-                    drugtaking.value="";
                     drugweight.value="";
+                    for (let i = 0; i < chk.length; i++) {
+                        chk[i].checked = false;
+                    }
                 }
 
             }
