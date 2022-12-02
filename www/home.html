@@ -9,11 +9,12 @@
                         weight: drugweight.value/ 服用量 /
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
+                    
 function saveDate() {
   var day = new Date();
-  'year',day.getFullYear();
-  'month',(day.getMonth()+1));
-  'date',day.getDate());
+        var month = ("0"+(hiduke.getMonth()+1)).slice(-2);
+        var day =  ("0"+hiduke.getDate()).slice(-2);
+        var value = year + month + day;
 }
 
 localStorage.setItem("localday", 2);/* 保存回数が１ /

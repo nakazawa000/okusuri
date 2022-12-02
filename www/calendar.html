@@ -8,7 +8,7 @@
 const today = new Date();
 // 月末だとずれる可能性があるため、1日固定で取得
 var showDate = new Date(today.getFullYear(), today.getMonth(), 1);
- 
+
 // 初期表示
 window.onload = function () {
 	showProcess(today, calendar);
@@ -81,14 +81,11 @@ function createProcess(year, month) {
 }000
 
 // function stampConfirmation(year,month,count){
-//     var today = year + month + count; 
-//     if(!localsum || localsum <= 0){/* 保存がないとき*/
-//         alert("no");                
-//     }else {
-//         for(var i=1; i<=localsum; i++) {
+//     var todayValue = year + month + count; 
+//     if(localday || localday > 0){
+//         for(var i=1; i<=localday; i++) {
 //             object = JSON.parse(localStorage.getItem(i));
-
-//             if(object.calenderday == today){
+//             if(object.calenderday == todayValue){
 //                 return "<td>" + count + "<br>" + "<img src='./images/kari.png' width='40%'>" + "</td>";                
 //             }
 //         }
