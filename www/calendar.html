@@ -80,6 +80,16 @@ function createProcess(year, month) {
 	return calendar;
 }000
 
+// daylist = localStorage.getItem("daylist");
+daylist = JSON.parse(localStorage.getItem("daylist"));
+
+for(var k=0;k<2;k++){
+    alert('kari');
+var exec_command = 'print(daylist.data' + (k) + ')';
+exec(exec_command);
+alert('kari');
+}
+
 // function stampConfirmation(year,month,count){
 //     var todayValue = year + month + count; 
 //     if(localday || localday > 0){

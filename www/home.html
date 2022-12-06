@@ -9,20 +9,27 @@
                         weight: drugweight.value/ 服用量 /
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
-                    
+
 function saveDate() {
   var day = new Date();
         var month = ("0"+(hiduke.getMonth()+1)).slice(-2);
         var day =  ("0"+hiduke.getDate()).slice(-2);
-        var value = year + month + day;
-}
+        var value = year + month + day
+        return value;
+};
 
-localStorage.setItem("localday", 2);/* 保存回数が１ /
-                    dayobject = {/ 日付情報の連想配列 /
-                        calenderday: drugday.value,/ 記録日 /
-                        calenderflag: drugamount.value,/ フラグ(0or1) /
-                    }
-                    localStorage.setItem(localsum, JSON.stringify(dayobject));/ ストレージにお薬情報を保存 */
+
+
+/* ローカルストレージテストデータ　日付 */
+    var daylist = {
+    data1: "20221104",
+    data2: "20221119"
+ }
+
+ localStorage.setItem("daylist", JSON.stringify(daylist));
+
+ 
+
     </script>
     <ons-toolbar></ons-toolbar>
 
@@ -49,5 +56,5 @@ localStorage.setItem("localday", 2);/* 保存回数が１ /
     <div id ="kuma">
         <img id ="mainimg" src="images/sirokuma.png">
     </div>
-    <ons-button onclick="ugoku()">飲めた！</ons-button>
+    <ons-button modifier="large" onclick="location.href='tes.html';timesave();ugoku()">飲めた！</ons-button>
 </ons-page>
