@@ -192,8 +192,10 @@
                     drugname.value="";/* テキストの中を空に */
                     drugday.value="";
                     drugamount.value="";
-                    drugtaking.value="";
                     drugweight.value="";
+                   for (let i = 0; i < chk.length; i++) {
+                        chk[i].checked = false;
+                    }
 
                 } else {/* 保存が２回目以降の時 */
                     localsum += 1;/* 保存回数＋１ */
