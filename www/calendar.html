@@ -11,6 +11,26 @@ var showDate = new Date(today.getFullYear(), today.getMonth(), 1);
 
 // 初期表示
 window.onload = function () {
+                var card_basis= document.getElementById('card_basis');
+            var add_code = "";
+
+            //localStorage.clear();
+
+            var daysum = localStorage.getItem('daysum');
+            var dayname ="";
+            
+            if(!daysum || daysum <= 0){/* 保存がないとき*/
+                add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content"><h2>エラー</h2></div></div>';
+            }else {
+                for(var i=1; i<=daysum; i++) {
+                    dayname = "day" + i;
+                    object = localStorage.getItem(dayname);
+
+                    add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content">日にち： ' + object +'</div> </div></div> ';
+                    }
+            }
+            card_basis.innerHTML = add_code;
+            
 	showProcess(today, calendar);
 };
 // 前の月表示
@@ -80,15 +100,15 @@ function createProcess(year, month) {
 	return calendar;
 }000
 
-// daylist = localStorage.getItem("daylist");
-daylist = JSON.parse(localStorage.getItem("daylist"));
+daylist = localStorage.getItem("daylist");
 
-for(var k=0;k<2;k++){
-    alert('kari');
-var exec_command = 'print(daylist.data' + (k) + ')';
-exec(exec_command);
-alert('kari');
-}
+
+// for(var k=0;k<2;k++){
+//     alert('kari');
+// var exec_command = 'print(daylist.data' + (k) + ')';
+// exec(exec_command);
+// alert('kari');
+// }
 
 // function stampConfirmation(year,month,count){
 //     var todayValue = year + month + count; 

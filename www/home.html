@@ -11,12 +11,30 @@
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
 
 function saveDate() {
-  var day = new Date();
+  var hiduke = new Date();
+        var year = hiduke.getFullYear();
         var month = ("0"+(hiduke.getMonth()+1)).slice(-2);
         var day =  ("0"+hiduke.getDate()).slice(-2);
         var value = year + month + day
         return value;
 };
+
+ function timesave(){ /* 変更ボタンを押したときに動く */
+             var daysum = Number(localStorage.getItem('daysum'));/* 何回保存したか */
+             var dayname = "";
+            if(!daysum){/* 保存がないとき*/
+                localStorage.setItem("daysum", 1);/* 保存回数＋１ */
+                daysum = 1;
+                localStorage.setItem("day1", saveDate());/* ストレージにお薬情報を保存 */
+                
+            }else {/* 保存が２回目以降の時 */
+                daysum += 1;/* 保存回数＋１ */
+                dayname = "day" + daysum;
+                localStorage.setItem("daysum", daysum);
+                localStorage.setItem(dayname, saveDate());
+                alert(localStorage.getItem(dayname));    
+            }
+        };
 
 
 
@@ -56,5 +74,5 @@ function saveDate() {
     <div id ="kuma">
         <img id ="mainimg" src="images/sirokuma.png">
     </div>
-    <ons-button modifier="large" onclick="location.href='tes.html';timesave();ugoku()">飲めた！</ons-button>
+    <ons-button onclick="timesave();ugoku()">飲めた！</ons-button>
 </ons-page>
