@@ -31,20 +31,14 @@ function saveDate() {
                 daysum += 1;/* 保存回数＋１ */
                 dayname = "day" + daysum;
                 localStorage.setItem("daysum", daysum);
-                localStorage.setItem(dayname, saveDate());
-                alert(localStorage.getItem(dayname));    
+                localStorage.setItem(dayname,  20220912);/*saveDate()*/
+                alert(localStorage.getItem(dayname));
+                alert(localStorage.getItem("daysum"));
             }
         };
 
 
-
-/* ローカルストレージテストデータ　日付 */
-    var daylist = {
-    data1: "20221104",
-    data2: "20221119"
- }
-
- localStorage.setItem("daylist", JSON.stringify(daylist));
+ //localStorage.setItem("daylist", JSON.stringify(daylist));
 
  
 

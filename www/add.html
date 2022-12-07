@@ -11,7 +11,8 @@
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
     
     <script>
-        window.onload = function(){
+        
+        document.addEventListener('show', function(event) {
             //今日の日付データを変数hidukeに格納
             const hiduke=new Date(); 
 
@@ -20,7 +21,7 @@
             const month = ("0"+(hiduke.getMonth()+1)).slice(-2);
             const day =  ("0"+hiduke.getDate()).slice(-2);
             document.getElementById('drugday').value = year + "-" + month + "-" + day;
-        }
+        });
 
         //確認画面のjs
         var app = {};

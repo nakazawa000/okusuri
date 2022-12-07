@@ -10,29 +10,9 @@ const today = new Date();
 var showDate = new Date(today.getFullYear(), today.getMonth(), 1);
 
 // 初期表示
-window.onload = function () {
-                var card_basis= document.getElementById('card_basis');
-            var add_code = "";
-
-            //localStorage.clear();
-
-            var daysum = localStorage.getItem('daysum');
-            var dayname ="";
-            
-            if(!daysum || daysum <= 0){/* 保存がないとき*/
-                add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content"><h2>エラー</h2></div></div>';
-            }else {
-                for(var i=1; i<=daysum; i++) {
-                    dayname = "day" + i;
-                    object = localStorage.getItem(dayname);
-
-                    add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content">日にち： ' + object +'</div> </div></div> ';
-                    }
-            }
-            card_basis.innerHTML = add_code;
-            
-	showProcess(today, calendar);
-};
+document.addEventListener('show', function(event) {
+    showProcess(today, calendar);
+});
 // 前の月表示
 function prev(){
 	showDate.setMonth(showDate.getMonth() - 1);
@@ -44,6 +24,25 @@ function next(){
 	showDate.setMonth(showDate.getMonth() + 1);
 	showProcess(showDate);
 }
+
+
+            //localStorage.clear();
+
+            var arr = new Array(60); 
+            var daysum = localStorage.getItem('daysum');
+            var dayname ="";
+            
+            if(!daysum || daysum <= 0){/* 保存がないとき*/
+                alert('aaaaa');
+            }else {
+                for(var i=1; i<=daysum; i++) {
+                    dayname = "day" + i;
+                    object = localStorage.getItem(dayname);
+                    arr[i] = Number(object);
+                    }
+            }
+            
+            card_basis.innerHTML = add_code;
 
 // カレンダー表示
 function showProcess(date) {
@@ -70,6 +69,8 @@ function createProcess(year, month) {
 	var lastMonthEndDate = new Date(year, month, 0).getDate();
 	var row = Math.ceil((startDayOfWeek + endDate) / week.length);
 
+    var com = year*10000 + (month+1)*100;
+
 	// 1行ずつ設定
 	for (var i = 0; i < row; i++) {
 		calendar += "<tr>";
@@ -85,14 +86,26 @@ function createProcess(year, month) {
 			} else {
 				// 当月の日付を曜日に照らし合わせて設定
 				count++;
+                com = com + count;
+    
 				if(year == today.getFullYear()
 					 && month == (today.getMonth())
 					 && count == today.getDate()){
-					calendar += "<td class='today'>" + count + "</td>";
+					calendar += "<td class='today'>" + count;
+                    if(comparison(com) == true){
+                        calendar += "<br>" + "<img src='./images/kari.png' width='40%'>";                       
+                    };
+                    calendar += "</td>";
 
 				} else {
-					calendar += "<td>" + count + "<br>" + "<img src='./images/kari.png' width='40%'>" + "</td>";       ;
+					calendar += "<td>" + count;
+                    comparison(com);
+                    if(comparison(com) == true){
+                        calendar += "<br>" + "<img src='./images/kari.png' width='40%'>";                       
+                    };
+                    calendar += "</td>";
 				}
+                com = com - count;
 			}
 		}
 		calendar += "</tr>";
@@ -100,7 +113,21 @@ function createProcess(year, month) {
 	return calendar;
 }000
 
-daylist = localStorage.getItem("daylist");
+function comparison(com){
+    var flag = 0;
+    for(var j=0;j <= arr.length;j++){
+        if(com == arr[j]){
+            flag = 1;
+            return true;
+            break;
+        }
+    }
+    if(flag == 0){
+        return false;
+    }
+}
+
+//daylist = localStorage.getItem("daylist");
 
 
 // for(var k=0;k<2;k++){
