@@ -157,9 +157,9 @@
         function checkkazu(){//ボタン押したら飲んだか数ー１
             chkazu[serect-1] -= 1;
             alert(chkazu[serect-1]); 
+            alert(Math.max(chkazu));
             if (Math.max(chkazu) == 0){// 今日飲むものが全部飲めたら
                 //alert("checkkazu()");
-                alert(Math.max(chkazu));
                 //localStorage.setItem('chbuttan', '1');
                 daysave();/*  スタンプを押す関数 */
             }
