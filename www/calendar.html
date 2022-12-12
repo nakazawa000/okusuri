@@ -115,8 +115,8 @@ function createProcess(year, month) {
 
 function comparison(com){
     var flag = 0;
-    for(var j=0;j <= arr.length;j++){
-        if(com == arr[j]){
+    for(var k=0;k <= arr.length;k++){
+        if(com == arr[k]){
             flag = 1;
             return true;
             break;
@@ -126,28 +126,6 @@ function comparison(com){
         return false;
     }
 }
-
-//daylist = localStorage.getItem("daylist");
-
-
-// for(var k=0;k<2;k++){
-//     alert('kari');
-// var exec_command = 'print(daylist.data' + (k) + ')';
-// exec(exec_command);
-// alert('kari');
-// }
-
-// function stampConfirmation(year,month,count){
-//     var todayValue = year + month + count; 
-//     if(localday || localday > 0){
-//         for(var i=1; i<=localday; i++) {
-//             object = JSON.parse(localStorage.getItem(i));
-//             if(object.calenderday == todayValue){
-//                 return "<td>" + count + "<br>" + "<img src='./images/kari.png' width='40%'>" + "</td>";                
-//             }
-//         }
-
-// }
 
     </script>
     <div class="wrapper">

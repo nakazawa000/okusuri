@@ -1,5 +1,4 @@
-  <ons-page>
-<!DOCTYPE HTML>
+<ons-page>
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,7 +13,7 @@
 
     <script>
 
-        window.onload = function() {/* ロードされたとき */
+       document.addEventListener('show', function(event) {/* ロードされたとき */
             var card_basis= document.getElementById('card_basis');
             var add_code = "";
             var changebutton = document.getElementById('changebutton'); 
@@ -22,7 +21,7 @@
             //localStorage.clear();
 
             var localsum = localStorage.getItem('localsum');
-            var object ;
+            var object ="";
             
             if(!localsum || localsum <= 0){/* 保存がないとき*/
 
@@ -37,9 +36,9 @@
                 changebutton.disabled = null;/* 変更ボタンが押せる */
             }
             card_basis.innerHTML = add_code;
-        }
+        });
 
-                function hrefadd(){ /* 追加ボタンを押したときに動く */
+        function hrefadd(){ /* 追加ボタンを押したときに動く */
             localStorage.setItem("hrefcheck", 1);
         };
 
@@ -68,5 +67,5 @@
 
 </body>
 </html>
-  </ons-page>
+</ons-page>
 

@@ -11,8 +11,7 @@
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
     
     <script>
-        
-        document.addEventListener('show', function(event) {
+        window.onload = function(){
             //今日の日付データを変数hidukeに格納
             const hiduke=new Date(); 
 
@@ -21,7 +20,7 @@
             const month = ("0"+(hiduke.getMonth()+1)).slice(-2);
             const day =  ("0"+hiduke.getDate()).slice(-2);
             document.getElementById('drugday').value = year + "-" + month + "-" + day;
-        });
+        }
 
         //確認画面のjs
         var app = {};
@@ -190,11 +189,14 @@
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/* ストレージにお薬情報を保存 */
 
-                    drugname.value="";/* テキストの中を空に */
+                    /* drugname.value="";
                     drugday.value="";
                     drugamount.value="";
-                    drugtaking.value="";
                     drugweight.value="";
+                    for (let i = 0; i < chk.length; i++) {
+                        chk[i].checked = false;
+                    }テキストの中を空に */
+                     location.href = 'index.html';/* 確認画面に */
 
                 } else {/* 保存が２回目以降の時 */
                     localsum += 1;/* 保存回数＋１ */
@@ -209,13 +211,14 @@
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));
                     
-                     drugname.value="";
+                     /*drugname.value="";
                     drugday.value="";
                     drugamount.value="";
                     drugweight.value="";
                     for (let i = 0; i < chk.length; i++) {
                         chk[i].checked = false;
-                    }
+                    }*/
+                     location.href = 'index.html';/* 確認画面に */
                 }
 
             }
