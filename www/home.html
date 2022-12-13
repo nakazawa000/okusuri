@@ -9,6 +9,13 @@
                         weight: drugweight.value/ 服用量 /
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
+
+                    
+         /*var list = ["aa","bb","cc","dd"];
+         localStorage.setItem('i', list);
+         var list2 = localStorage.getItem('i');
+         //list2.push("ee");
+         alert(list2.split(','));*/
             
             //localStorage.clear();
             var drugtototal = 0; /* 薬の飲んだ数*/
@@ -157,8 +164,8 @@
         function checkkazu(){//ボタン押したら飲んだか数ー１
             chkazu[serect-1] -= 1;
             alert(chkazu[serect-1]); 
-            alert(Math.max(chkazu));
-            if (Math.max(chkazu) == 0){// 今日飲むものが全部飲めたら
+            alert(Math.max.apply(NaN, chkazu));
+            if (Math.max.apply(NaN, chkazu) == 0){// 今日飲むものが全部飲めたら
                 //alert("checkkazu()");
                 //localStorage.setItem('chbuttan', '1');
                 daysave();/*  スタンプを押す関数 */
