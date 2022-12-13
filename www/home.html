@@ -18,7 +18,7 @@
                 var table_basis= document.getElementById('table_basis'); /* テーブル*/
                 var add_code = "<tr><th>薬名</th><th>次</th></tr>";
                 var localsum = localStorage.getItem('localsum');
-                var object ;
+                var object;
                 if(!localsum || localsum <= 0){/* 保存がないとき*/
                     add_code += '<tr>お薬情報を入力してください</tr>';
                 }else {/* 保存があるとき*/
@@ -114,7 +114,6 @@
                         chkazu.push(object.taking.length);/* 配列に1日に飲める数を入れる */
                         //alert("addhairetu()");
                     }
-                alert(chkazu);
             };
 
                 
@@ -156,12 +155,14 @@
 
         function checkkazu(){//ボタン押したら飲んだか数ー１
             chkazu[serect-1] -= 1;
-            alert(chkazu[serect-1]); 
-            alert(Math.max(chkazu));
-            if (Math.max(chkazu) == 0){// 今日飲むものが全部飲めたら
+            //alert(chkazu[serect-1]); 
+            if (Math.max.apply(NaN, chkazu) == 0){// 今日飲むものが全部飲めたら
                 //alert("checkkazu()");
                 //localStorage.setItem('chbuttan', '1');
                 daysave();/*  スタンプを押す関数 */
+
+                document.location.reload();
+                alert("おくすりをのみおわりました！やったね！！");
             }
         };
             
@@ -178,8 +179,6 @@
                 dayname = "day" + daysum;
                 localStorage.setItem("daysum", daysum);
                 localStorage.setItem(dayname,  saveDate());
-                alert(localStorage.getItem(dayname));
-                alert(localStorage.getItem("daysum"));
             }
         };
 
@@ -198,7 +197,7 @@
     <select class="select-input" name="example" id = "serectdrug" onchange="isSerect(this)" multiple>
     </select>
     <div>
-    <ons-button modifier="large" id ="nometabuttan" onclick="ugoku();kazuheru();checkkazu()">飲めた！</ons-button><!--location.href='tes.html';timesave();-->
+    <ons-button modifier="large" id ="nometabuttan" onclick="ugoku();kazuheru();checkkazu();">飲めた！</ons-button><!--location.href='tes.html';timesave();-->
     </div>
     <table border="1" id="table_basis">
     </table>
