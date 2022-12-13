@@ -2,7 +2,6 @@
     <ons-toolbar>
       <div class="center" id="toolbar-title"></div>
     </ons-toolbar>
-    <p>カレンダーactive</p>
     <script>
         const week = ["日", "月", "火", "水", "木", "金", "土"];
 const today = new Date();
@@ -33,7 +32,6 @@ function next(){
             var dayname ="";
             
             if(!daysum || daysum <= 0){/* 保存がないとき*/
-                alert('aaaaa');
             }else {
                 for(var i=1; i<=daysum; i++) {
                     dayname = "day" + i;
