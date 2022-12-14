@@ -8,14 +8,16 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="css/styleadd.css">
+
+
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
     
     <script>
          document.addEventListener('show', function(){
-            alert("a");
             var hour_basis= document.getElementById('hour_basis');
             var minute_basis= document.getElementById('minute_basis');
-            var add_code = ;
+            var add_code = '';
             //var localsum = localStorage.getItem('localsum');
             //var object ;
 
@@ -28,7 +30,7 @@
                 add_code += '<option value = "' + i + '">' + i +'</option>';
             }
             minute_basis.innerHTML = add_code;
-        })
+        });
     </script>
 </head>
 <body>

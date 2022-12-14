@@ -8,10 +8,12 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="css/styleadd.css">
+
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
     
     <script>
-        window.onload = function(){
+        window.onload = function() {
             //今日の日付データを変数hidukeに格納
             const hiduke=new Date(); 
 
@@ -86,8 +88,7 @@
                         <li class="list-item"><!--薬名-->
                             <div class="list-item__center">
                                 <select name="example" id = "change_basis" height: 50px onchange="isSerect(this)">
-                                    <!--<option >選択してください</option>-->
-                                    
+                                    <!--<option >選択してください</option>-->  
                                 </select>
                             </div>
                         </li>
@@ -267,7 +268,8 @@
                     }
                 localStorage.setItem(serect, JSON.stringify(drugobject));
                 example();/* プルダウン更新 */
-                nullvalue();/* 内容を空に */
+                /*nullvalue(); 内容を空に */
+                location.href = 'index.html';/* 確認画面に */
 
             }
         };
@@ -284,7 +286,7 @@
             localStorage.removeItem(localsum);/* ストレージの最後を削除 */
             localsum = localsum -1;/* ストレージの数をー１ */
             localStorage.setItem("localsum", localsum);
-             location.href = 'index.html';/* 確認画面に */
+             location.href = 'setting.html';/* 確認画面に */
         };
 
         function isRegNum(obj){ /* 半角数字数字かどうか */

@@ -8,7 +8,10 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="css/styleadd.css">
+    
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="hairetu.js"></script>
     
     <script>
         window.onload = function(){
@@ -17,9 +20,25 @@
 
             //年・月・日・曜日を取得する
             const year = hiduke.getFullYear();
-            const month = hiduke.getMonth()+1;
-            const day = hiduke.getDate();
+            const month = ("0"+(hiduke.getMonth()+1)).slice(-2);
+            const day =  ("0"+hiduke.getDate()).slice(-2);
             document.getElementById('drugday').value = year + "-" + month + "-" + day;
+             //ここからオートコンプリート機能
+                let arr = kusuri;
+
+                //datalistにオートコンプリート値を設定
+                for(let item of arr){
+
+                    // optionタグを生成
+                    let option = document.createElement("option");
+
+                    // 値に配列の要素を代入
+                    option.value = item;
+
+                    // datalist要素の子要素として生成
+                    document.getElementById("testlist").appendChild(option);
+                }
+                    //ここまでオートコンプリート機能
         }
 
         //確認画面のjs
@@ -50,9 +69,8 @@
                         <!--リスト-->
                         <li class="list-item"><!--薬名-->
                             お薬名 ：
-                            <div class="list-item__center">
-                            <input id="drugname" type="text" class="text-input" placeholder="お薬名" >
-                            </div>
+                            <input id="drugname" type="text" autocomplete="off" list="testlist"class="text-input" placeholder="お薬名">
+                            <datalist id="testlist"></datalist>
                         </li>
                         <li class="list-item"><!--処方日-->
                             処方日 ：
@@ -189,13 +207,20 @@
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/* ストレージにお薬情報を保存 */
 
-                    drugname.value="";/* テキストの中を空に */
+                    /* drugname.value="";
                     drugday.value="";
                     drugamount.value="";
                     drugweight.value="";
+<<<<<<< HEAD
                    for (let i = 0; i < chk.length; i++) {
                         chk[i].checked = false;
                     }
+=======
+                    for (let i = 0; i < chk.length; i++) {
+                        chk[i].checked = false;
+                    }テキストの中を空に */
+                     location.href = 'index.html';/* 確認画面に */
+>>>>>>> 7fde73847dc4adc7a8f0ed92b7445628a87dcd13
 
                 } else {/* 保存が２回目以降の時 */
                     localsum += 1;/* 保存回数＋１ */
@@ -210,13 +235,14 @@
                     }
                     localStorage.setItem(localsum, JSON.stringify(drugobject));
                     
-                     drugname.value="";
+                     /*drugname.value="";
                     drugday.value="";
                     drugamount.value="";
                     drugweight.value="";
                     for (let i = 0; i < chk.length; i++) {
                         chk[i].checked = false;
-                    }
+                    }*/
+                     location.href = 'index.html';/* 確認画面に */
                 }
 
             }

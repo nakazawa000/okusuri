@@ -1,0 +1,29 @@
+@charset "utf-8";
+/*メイン画面*/
+body{
+    text-align: center;
+}
+
+img {
+ max-width: 80%;
+ height: auto;
+}
+.main{
+    display:inline-block;
+    text-align: center;
+    /* padding: 8px */
+}
+
+.page__background {
+  background-image:url('../images/room.png');
+  background-size: cover;
+  position: absolute;
+top: 0px;
+left: 0px;
+right: 0px;
+bottom: 0px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+

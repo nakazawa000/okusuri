@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<ons-page>
 <html>
 <head>
     <meta charset="utf-8">
@@ -8,11 +8,14 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="css/styleadd.css">
+
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="page.js"></script>
 
     <script>
 
-        window.onload = function(){/* ロードされたとき */
+       document.addEventListener('show', function(event) {/* ロードされたとき */
             var card_basis= document.getElementById('card_basis');
             var add_code = "";
             var changebutton = document.getElementById('changebutton'); 
@@ -20,9 +23,10 @@
             //localStorage.clear();
 
             var localsum = localStorage.getItem('localsum');
-            var object ;
+            var object ="";
             
             if(!localsum || localsum <= 0){/* 保存がないとき*/
+
                 add_code += '<div style="height: 100px; padding: 1px 0 0 0;"><div class="card"><div class="card__content"><h2>お薬情報を入力してください</h2></div></div>';
                 changebutton.disabled = "disabled";/* 変更ボタンが押せない */
             }else {
@@ -34,9 +38,9 @@
                 changebutton.disabled = null;/* 変更ボタンが押せる */
             }
             card_basis.innerHTML = add_code;
-        }
+        });
 
-                function hrefadd(){ /* 追加ボタンを押したときに動く */
+        function hrefadd(){ /* 追加ボタンを押したときに動く */
             localStorage.setItem("hrefcheck", 1);
         };
 
@@ -46,7 +50,7 @@
     </script>
 </head>
 <body>
-  <ons-page>
+
         <ons-toolbar>
             <div class="center">お薬管理</div>
                 <div class="toolbar__right">
@@ -58,8 +62,12 @@
         </div>
 
         <p></p>
+
         <ons-button modifier="large" onclick="location.href='lock.html';hrefadd()">追加</ons-button>
         <ons-button modifier="large" id="changebutton" onclick="location.href='lock.html';hrefcheck()" disabled>変更・削除</ons-button>
   </ons-page>
+
 </body>
 </html>
+</ons-page>
+
