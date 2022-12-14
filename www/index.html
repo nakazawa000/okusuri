@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.6/dayjs.min.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 
   <script>
     ons.ready(function() {
@@ -35,12 +38,9 @@
   </script>
 </head>
 <body>
- <ons-navigator page="home.html" id="navi">
- </ons-navigator>
- <ons-toolbar>
-      <div class="center" id="toolbar-title"></div>
-    </ons-toolbar>
+
     <ons-tabbar position="auto">
+            
       <ons-tab label="HOME" page="home.html" active>
       </ons-tab>
       <ons-tab label="カレンダー" page="calendar.html">
@@ -48,5 +48,6 @@
       <ons-tab label="お薬設定" page="setting.html">
       </ons-tab>
     </ons-tabbar>
+
 </body>
 </html>
