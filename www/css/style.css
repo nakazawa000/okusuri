@@ -2,6 +2,7 @@
 /*メイン画面*/
 body{
     text-align: center;
+    overflow: hidden;
 }
 
 img {
@@ -59,7 +60,6 @@ span#time {
 	text-align: center;
 	font-size: 24px;
 	width: 100%;
-    padding: 2%;
 	margin: 1rem 0 0;
     background-color: rgba(255, 255, 255, 0.7);
 }
