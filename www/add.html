@@ -8,7 +8,10 @@
     <script src="components/loader.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="css/styleadd.css">
+    
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="hairetu.js"></script>
     
     <script>
         window.onload = function(){
@@ -20,6 +23,22 @@
             const month = ("0"+(hiduke.getMonth()+1)).slice(-2);
             const day =  ("0"+hiduke.getDate()).slice(-2);
             document.getElementById('drugday').value = year + "-" + month + "-" + day;
+             //ここからオートコンプリート機能
+                let arr = kusuri;
+
+                //datalistにオートコンプリート値を設定
+                for(let item of arr){
+
+                    // optionタグを生成
+                    let option = document.createElement("option");
+
+                    // 値に配列の要素を代入
+                    option.value = item;
+
+                    // datalist要素の子要素として生成
+                    document.getElementById("testlist").appendChild(option);
+                }
+                    //ここまでオートコンプリート機能
         }
 
         //確認画面のjs
@@ -50,9 +69,8 @@
                         <!--リスト-->
                         <li class="list-item"><!--薬名-->
                             お薬名 ：
-                            <div class="list-item__center">
-                            <input id="drugname" type="text" class="text-input" placeholder="お薬名" >
-                            </div>
+                            <input id="drugname" type="text" autocomplete="off" list="testlist"class="text-input" placeholder="お薬名">
+                            <datalist id="testlist"></datalist>
                         </li>
                         <li class="list-item"><!--処方日-->
                             処方日 ：

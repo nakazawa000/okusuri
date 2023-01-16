@@ -155,14 +155,17 @@
 
         function checkkazu(){//ボタン押したら飲んだか数ー１
             chkazu[serect-1] -= 1;
+
             //alert(chkazu[serect-1]); 
             if (Math.max.apply(NaN, chkazu) == 0){// 今日飲むものが全部飲めたら
+
                 //alert("checkkazu()");
                 //localStorage.setItem('chbuttan', '1');
                 daysave();/*  スタンプを押す関数 */
 
                 document.location.reload();
                 alert("おくすりをのみおわりました！やったね！！");
+
             }
         };
             
@@ -199,6 +202,6 @@
     <div>
     <ons-button modifier="large" id ="nometabuttan" onclick="ugoku();kazuheru();checkkazu();">飲めた！</ons-button><!--location.href='tes.html';timesave();-->
     </div>
-    <table border="1" id="table_basis">
+    <table border="1" id="table_basis" style="overflow-y:auto;">
     </table>
 </ons-page>
