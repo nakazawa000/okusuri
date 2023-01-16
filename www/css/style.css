@@ -2,6 +2,7 @@
 /*メイン画面*/
 body{
     text-align: center;
+    overflow: hidden;
 }
 
 img {

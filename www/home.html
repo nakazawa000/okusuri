@@ -11,7 +11,6 @@
                     localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
             
             //localStorage.clear();
-            var drugtototal = 0; /* 薬の飲んだ数*/
             var  serect ="";/*ローカルストレージの薬の番号*/
             var chkazu = [];/* どの薬を1日何回飲むか */
             document.addEventListener('show', function(event) { /* ページを開いたとき*/
@@ -61,8 +60,7 @@
                 if(serect == "選択してください") {/* 初期 */
                     nbuttan();      /* ボタン押せない*/
                 } else {
-                 object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身取得 */   
-                drugtototal = object.total;/* 各薬の合計 */
+                    drugtototaldaycheck(serect);/* 各薬の合計の関数 */
                     if ( Math.max(chkazu) > 0 || chkazu[serect-1] > 0){//(localStorage.getItem("chbuttan")== 0 ||
                         //alert("y");
                         ybuttan();/* ボタン押せる */
@@ -74,8 +72,8 @@
             
 
              function kazuheru(){ /* 飲めた時の薬減らす */
-                object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身 */   
-                drugtototal = drugtototal-1;/* 薬を減らす */
+                object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身 */  
+                const drugtototal = localStorage.getItem("drugtototal") -1;/* 薬を減らす */
                 drugobject = {
                         name: object.name,
                         day: object.day,
@@ -103,6 +101,25 @@
                     //localStorage.setItem('chbuttan', '0');
                     // 薬飲んだ処理（例: alert('薬を飲みました')）
                     addhairetu();
+                }
+            };
+
+            // 薬飲んだボタンがクリックされた時の処理
+            function drugtototaldaycheck(serect){
+                const mainserect  = serect;
+                // 今日の日付を取得する
+                const hid = new Date();
+                // 今日の日付をyyyy-mm-ddの形式の文字列に変換する
+                const ttodayString2 = hid.toISOString().slice(0, 10);
+                // ローカルストレージから、最後にボタンがクリックされた日付を取得する
+                const lastClickedDate2 = localStorage.getItem('lastClickedDate2');
+                // 最後にボタンがクリックされた日付が今日でない場合の処理
+                if (lastClickedDate2 !== ttodayString2) {
+                    //alert("daycheck()");
+                    // 今日の日付をローカルストレージに保存する
+                    localStorage.setItem('lastClickedDate2', ttodayString2);
+                    const sub_object = JSON.parse(localStorage.getItem(mainserect));/* プルダウンの中身取得 */   
+                    localStorage.setItem("drugtototal", sub_object.total);/* 各薬の合計 */
                 }
             };
 
