@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <link rel="stylesheet" href="components/loader.css">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="css/styleadd.css">
+
+
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    
+    <script>
+         document.addEventListener('show', function(){
+            var hour_basis= document.getElementById('hour_basis');
+            var minute_basis= document.getElementById('minute_basis');
+            var add_code = '';
+            //var localsum = localStorage.getItem('localsum');
+            //var object ;
+
+            for(var i=1; i<=12; i++) {
+                add_code += '<option value = "' + i + '">' + i +'</option>';
+            }
+            hour_basis.innerHTML = add_code;
+
+            for(var i=12; i<=60; i++) {
+                add_code += '<option value = "' + i + '">' + i +'</option>';
+            }
+            minute_basis.innerHTML = add_code;
+        });
+    </script>
+</head>
+<body>
+    <ons-page>
+        <ons-toolbar>
+             <ons-back-button onclick="location.href='index.html'">前のページへ</ons-back-button> <!--戻るボタン-->
+            <div class="center">時間設定</div><!--上の表示-->
+        </ons-toolbar>
+    <ons-page>
+
+    <div style="height: 200px; padding: 1px 0 0 0;">
+        <div class="card">
+            <h2 class="card__title">朝食時間設定</h2>
+            <div class="card__content">
+                 <select class="select-input select-input--underbar" id ="hour_basis">
+                    
+                </select>
+                <select class="select-input select-input--underbar" id ="minute_basis">
+                    
+                </select>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
