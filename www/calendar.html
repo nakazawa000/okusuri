@@ -1,8 +1,7 @@
 <ons-page>
     <ons-toolbar>
-      <div class="center" id="toolbar-title"></div>
+      <div class="center" id="toolbar-title">カレンダー</div>
     </ons-toolbar>
-    <p>カレンダーactive</p>
     <script>
         const week = ["日", "月", "火", "水", "木", "金", "土"];
 const today = new Date();
@@ -33,7 +32,6 @@ function next(){
             var dayname ="";
             
             if(!daysum || daysum <= 0){/* 保存がないとき*/
-                alert('aaaaa');
             }else {
                 for(var i=1; i<=daysum; i++) {
                     dayname = "day" + i;
@@ -93,7 +91,7 @@ function createProcess(year, month) {
 					 && count == today.getDate()){
 					calendar += "<td class='today'>" + count;
                     if(comparison(com) == true){
-                        calendar += "<br>" + "<img src='./images/kari.png' width='40%'>";                       
+                        calendar += "<br>" + "<img src='./images/banzai.png' width='50px' height='50px'>";                    
                     };
                     calendar += "</td>";
 
@@ -101,7 +99,7 @@ function createProcess(year, month) {
 					calendar += "<td>" + count;
                     comparison(com);
                     if(comparison(com) == true){
-                        calendar += "<br>" + "<img src='./images/kari.png' width='40%'>";                       
+                        calendar += "<br>" + "<img src='./images/banzai.png' width='50px' height='50px'>";                     
                     };
                     calendar += "</td>";
 				}
