@@ -50,9 +50,12 @@
                 location.href='add.html';
             } else if(hrefcheck == 2){ 
                 location.href='change.html';
-            } 
-          } else {
-                alert("エラー");
+            }
+          } else if(!lock){
+                alert("新しいパスワードを設定してください");
+                input_pass.value = "";
+            }else {
+                alert("パスワードが正しくありません");
                 input_pass.value = "";
             }
                  //alert (num); 

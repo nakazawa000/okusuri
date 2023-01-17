@@ -1,169 +1,173 @@
 <ons-page>
     <script>
-         /*localStorage.setItem("localsum", 1); 保存回数が１ /
-                    drugobject = {/ お薬情報の連想配列 /
-                        name: drugname.value,/ お薬名 /
-                        day: drugday.value,/ 処方日 /
-                        amount: drugamount.value,/ 処方量 /
-                        taking: drugtaking.value,/ 服用間隔 /
-                        weight: drugweight.value/ 服用量 /
-                    }
-                    localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
-
-                    
-         /*var list = ["aa","bb","cc","dd"];
-         localStorage.setItem('i', list);
-         var list2 = localStorage.getItem('i');
-         //list2.push("ee");
-         alert(list2.split(','));*/
+/*localStorage.setItem("localsum", 1); 保存回数が１ /
+drugobject = {/ お薬情報の連想配列 /
+    name: drugname.value,/ お薬名 /
+    day: drugday.value,/ 処方日 /
+    amount: drugamount.value,/ 処方量 /
+    taking: drugtaking.value,/ 服用間隔 /
+    weight: drugweight.value/ 服用量 /
+}
+localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
+//document.location.reload(); 画面りとーど
             
-            //localStorage.clear();
-            var drugtototal = 0; /* 薬の飲んだ数*/
-            var  serect ="";/*ローカルストレージの薬の番号*/
-            
-            document.addEventListener('show', function(event) { /* ページを開いたとき*/
-                var table_basis= document.getElementById('table_basis'); /* テーブル*/
-                var add_code = "<tr><th>薬名</th><th>次</th></tr>";
-                var localsum = localStorage.getItem('localsum');
-                var object;
-                if(!localsum || localsum <= 0){/* 保存がないとき*/
-                    add_code += '<tr>お薬情報を入力してください</tr>';
-                }else {/* 保存があるとき*/
-                    for(var i=1; i<=localsum; i++) {
-                        object = JSON.parse(localStorage.getItem(i));
-                        add_code += '<tr><td>'+object.name+'</td><td>'+object.taking+'</td></tr>';/* テーブルに情報追加 */
-                    }
-                 }
-                table_basis.innerHTML = add_code;/* テーブルに追加*/
-                example();/* プルダウン更新 */
-                nbuttan();/* ボタン押せない */
-                daycheck();/* 1日1回、もしくはリスト空白 */
-            });
+//localStorage.clear(); 
+var drugtototal = 0; /* 薬の飲んだ数*/
+var  serect ="";/*ローカルストレージの薬の番号*/
+
+/* ページを開いたとき*/            
+document.addEventListener('show', function(event) { 
+    var table_basis= document.getElementById('table_basis'); /* テーブル*/
+    var add_code = "<tr><th>薬名</th><th>次</th></tr>";
+    var localsum = localStorage.getItem('localsum');
+    var object;
+    /* 保存がないとき*/
+    if(!localsum || localsum <= 0){
+        add_code += '<tr>お薬情報を入力してください</tr>';
+    }else {/* 保存があるとき*/
+        for(var i=1; i<=localsum; i++) {
+        object = JSON.parse(localStorage.getItem(i));
+        add_code += '<tr><td>'+object.name+'</td><td>'+object.taking+'</td></tr>';/* テーブルに情報追加 */
+        }
+    }
+    table_basis.innerHTML = add_code;/* テーブルに追加*/
+    example();/* プルダウン更新 */
+    nbuttan();/* ボタン押せない */
+    daycheck();/* 1日1回、もしくはリスト空白 */
+});
 
 
-            function saveDate() {
-                var hid=new Date(); //今日の日付データを変数hidukeに格納
-                //年・月・日・曜日を取得する
-                var year = hid.getFullYear();
-                var month = ("0"+(hid.getMonth()+1)).slice(-2);
-                var day =  ("0"+hid.getDate()).slice(-2);
-                return (year + month  + day);
-            };
+function saveDate() {
+    var hid=new Date(); //今日の日付データを変数hidukeに格納
+    //年・月・日・曜日を取得する
+    var year = hid.getFullYear();
+    var month = ("0"+(hid.getMonth()+1)).slice(-2);
+    var day =  ("0"+hid.getDate()).slice(-2);
+    return (year + month  + day);
+};
 
-            function example(){/* プルダウンを更新する関数 */
-                var serectdrug= document.getElementById('serectdrug');
-                var add_code = '<option >選択してください</option>';
-                var localsum = localStorage.getItem('localsum');
-                var object;
+/* プルダウンを更新する関数 */
+function example(){
+    var serectdrug= document.getElementById('serectdrug');
+    var add_code = '<option >選択してください</option>';
+    var localsum = localStorage.getItem('localsum');
+    var object;
+    /* プルダウン処理 */
+    for(var i=1; i<=localsum; i++) {
+        object = JSON.parse(localStorage.getItem(i));
+        add_code += '<option value = "' + i + '">' + object.name +'</option>';
+      }
+    serectdrug.innerHTML = add_code;
+};
 
-                for(var i=1; i<=localsum; i++) {
-                    object = JSON.parse(localStorage.getItem(i));
-                    add_code += '<option value = "' + i + '">' + object.name +'</option>';
-                }
-                serectdrug.innerHTML = add_code;
-            };
+function isSerect(obj){ /* プルダウン処理 */
+    serect  = obj.value; /* 何個目か*/ 
+    if(serect == "選択してください") {/* 初期 */
+        nbuttan();      /* ボタン押せない*/
+    } else {
+        object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身取得 */   
+        drugtototal = object.total;/* 各薬の合計 */
+        var chkazu = localStorage.getItem('chkazu').split(',');
+        //今日のむ薬の最大値が０以上　または　今日選んだ薬の飲む数が０以上の時
+        if ( Math.max.apply(null, chkazu) > 0 || Number(chkazu[serect-1]) > 0){
+            ybuttan();/* ボタン押せる */
+        } else {
+            nbuttan();
+        }
+    }
+};
 
-            function isSerect(obj){ /* プルダウン処理 */
-                //alert("isSerect(obj)");
-                serect  = obj.value; /* 何個目か*/ 
-                if(serect == "選択してください") {/* 初期 */
-                    nbuttan();      /* ボタン押せない*/
-                } else {
-                 object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身取得 */   
-                drugtototal = object.total;/* 各薬の合計 */
-                var chkazu = localStorage.getItem('chkazu').split(',');
-                //alert(chkazu);
-                //alert(chkazu[serect-1]);
-                //alert(Math.max.apply(null, chkazu));
-                    if ( Math.max.apply(null, chkazu) > 0 || Number(chkazu[serect-1]) > 0){//(localStorage.getItem("chbuttan")== 0 ||
-                        //alert("y");
-                        ybuttan();/* ボタン押せる */
-                    } else {
-                        //alert("n");
-                        nbuttan();
-                    }
-                }
-            }
-            
+/* 飲めた時の薬減らす */            
+function kazuheru(){ 
+   object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身 */   
+   drugtototal = drugtototal-1;/* 薬を減らす */
+   drugobject = {
+        name: object.name,
+        day: object.day,
+        amount: object.amount,
+        taking: object.taking,
+        weight: object.weight,
+        total:drugtototal/* 薬の数ー１ */
+    }
+   localStorage.setItem(serect, JSON.stringify(drugobject));/* 保存*/
+};
 
-             function kazuheru(){ /* 飲めた時の薬減らす */
-                object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身 */   
-                drugtototal = drugtototal-1;/* 薬を減らす */
-                drugobject = {
-                        name: object.name,
-                        day: object.day,
-                        amount: object.amount,
-                        taking: object.taking,
-                        weight: object.weight,
-                        total:drugtototal/* 薬の数ー１ */
-                    }
-                localStorage.setItem(serect, JSON.stringify(drugobject));/* 保存*/
-            };
+// 薬飲んだボタンがクリックされた時の処理
+function daycheck(){
+    // 今日の日付を取得する
+    const hid = new Date();
+    // 今日の日付をyyyy-mm-ddの形式の文字列に変換する
+    const ttodayString = hid.toISOString().slice(0, 10);
+    // ローカルストレージから、最後にボタンがクリックされた日付を取得する
+    const lastClickedDate = localStorage.getItem('lastClickedDate');
+    // 最後にボタンがクリックされた日付が今日でない場合の処理
+    if (lastClickedDate !== ttodayString ){
+        //登録されている今日飲む回数が登録されていないとき
+        if(JSON.parse(localStorage.getItem(1)).taking != null){
+            // 今日の日付をローカルストレージに保存する
+            localStorage.setItem('lastClickedDate', ttodayString);
+            // 薬飲んだ処理（例: alert('薬を飲みました')）
+            newhairetu();
+        }
+    }
+    //薬の登録数と今日飲む薬の数が等しくないとき
+    if( localStorage.getItem("localsum") !== localStorage.getItem   ("daychecksum")){
+        addhairetu();
+    } 
+};
 
-            // 薬飲んだボタンがクリックされた時の処理
-            function daycheck(){
-                // 今日の日付を取得する
-                const hid = new Date();
-                // 今日の日付をyyyy-mm-ddの形式の文字列に変換する
-                const ttodayString = hid.toISOString().slice(0, 10);
-                // ローカルストレージから、最後にボタンがクリックされた日付を取得する
-                const lastClickedDate = localStorage.getItem('lastClickedDate');
-                // 最後にボタンがクリックされた日付が今日でない場合の処理
-                //alert("daycheck");
-                if (lastClickedDate !== ttodayString ){
-                    if(JSON.parse(localStorage.getItem(1)).taking != null) {//localStorage.getItem('chkazu').split(',').length > 0 || 
-                        alert("daycheck(if)");
-                        // 今日の日付をローカルストレージに保存する
-                        localStorage.setItem('lastClickedDate', ttodayString);
-                        //localStorage.setItem('chbuttan', '0');
-                        // 薬飲んだ処理（例: alert('薬を飲みました')）
-                        addhairetu();
-                    } else{
-                        alert("値なし");
-                    }
-                }
-            };
+//1日に何回飲むか追加
+function addhairetu(){
+    var localsum = Number(localStorage.getItem('localsum'));
+    var daychecksum = Number(localStorage.getItem("daychecksum"));
+    var object;
+    var chkazu = localStorage.getItem("chkazu").split(',');
+    for(var i=daychecksum+1; i<=localsum; i++) {
+        object = JSON.parse(localStorage.getItem(i));
+        chkazu += ',' + object.taking.length;
+        chkazu = chkazu.split(',');/* 配列に1日に飲める数を入れる */
+    }
+    localStorage.setItem("daychecksum", localsum);
+    localStorage.setItem("chkazu", chkazu);
+};
 
-            function addhairetu(){//1日に何回飲むか
-                    var localsum = localStorage.getItem('localsum');
-                    var object;
-                    var chkazu = [];
-                for(var i=1; i<=localsum; i++) {
-                        object = JSON.parse(localStorage.getItem(i));
-                        chkazu.push(object.taking.length);/* 配列に1日に飲める数を入れる */
-                        //alert("addhairetu()");
-                    }
-                localStorage.setItem("chkazu", chkazu);
-            };
+//1日に何回飲むか..1日1回更新
+function newhairetu(){
+    var localsum = localStorage.getItem('localsum');
+    var object;
+    var chkazu = [];
+    for(var i=1; i<=localsum; i++) {
+        object = JSON.parse(localStorage.getItem(i));
+        chkazu.push(object.taking.length);/* 配列に1日に飲める数を入れる */
+    }
+    localStorage.setItem("daychecksum", localsum);
+    localStorage.setItem("chkazu", chkazu);
+};
 
-                
-            /* ローカルストレージテストデータ　日付 
-                var daylist = {
-                data1: "20221104",
-                data2: "20221119"
-            }
+/* ローカルストレージテストデータ　日付 
+var daylist = {
+    data1: "20221104",
+    data2: "20221119"
+}
+localStorage.setItem("daylist", JSON.stringify(daylist));*/
 
-            localStorage.setItem("daylist", JSON.stringify(daylist));*/
-
-     </script>  
-    <ons-toolbar></ons-toolbar>
-
+</script>  
+<ons-toolbar></ons-toolbar>
     <div id = "timeText">
         <span id="time"></span>
-
         <script type="text/javascript" style="font-family: 'Georgia', cursive;">
             function showTime() {
                 var now = new Date();
                 var nowhour =("0" + (now.getHours())).slice(-2);
                 var nowminutes = ("0" + (now.getMinutes())).slice(-2);
                 var nowseconds = now.getSeconds();
-            
                 var text = nowhour + "：" + nowminutes; 
                 document.getElementById('time').innerHTML =text;
-            
             };
             setInterval(showTime,1000);
-            function ugoku(){/* アニメーション */
+
+            /* アニメーション */
+            function ugoku(){
                 document.getElementById("mainimg").src = "images/anime.gif";/* GIF画像に */
                 nbuttan();/* ボタン押せない */
                 window.setTimeout(() => {/* 5秒午に */
@@ -173,45 +177,44 @@
                 }, 5000);
             };
 
-        function checkkazu(){//ボタン押したら飲んだか数ー１
-            var chkazu = localStorage.getItem('chkazu').split(',');
-            chkazu[serect-1] = Number(chkazu[serect-1]) -1; 
-                //alert(chkazu[serect-1]); 
-            localStorage.setItem("chkazu", chkazu);
-
-            if (Math.max.apply(null, chkazu) == 0){// 今日飲むものが全部飲めたら
-                //alert("checkkazu()");
-                //localStorage.setItem('chbuttan', '1');
-                daysave();/*  スタンプを押す関数 */
-
-                document.location.reload();
-                alert("おくすりをのみおわりました！やったね！！");
-
-            }
-        };
+            //ボタン押したら飲んだか数ー１
+            function checkkazu(){
+                var chkazu = localStorage.getItem('chkazu').split(',');
+                chkazu[serect-1] = Number(chkazu[serect-1]) -1; 
+                localStorage.setItem("chkazu", chkazu);
+                if (Math.max.apply(null, chkazu) == 0){// 今日飲むものが全部飲めたら
+                    //localStorage.setItem('chbuttan', '1');
+                    daysave();/*  スタンプを押す関数 */
+                    document.location.reload();
+                    alert("おくすりをのみおわりました！やったね！！");
+                }
+            };
             
-        function daysave(){/*  スタンプを押す関数*/
-             var daysum = Number(localStorage.getItem('daysum'));/* 何回保存したか */
-             var dayname = "";
-            if(!daysum){/* 保存がないとき*/
-                localStorage.setItem("daysum", 1);/* 保存回数＋１ */
-                daysum = 1;
-                localStorage.setItem("day1", saveDate());/* ストレージにお薬情報を保存 */
-                
-            }else {/* 保存が２回目以降の時 */
-                daysum += 1;/* 保存回数＋１ */
-                dayname = "day" + daysum;
-                localStorage.setItem("daysum", daysum);
-                localStorage.setItem(dayname,  saveDate());
-            }
-        };
+            /*  スタンプを押す関数*/
+            function daysave(){
+                 var daysum = Number(localStorage.getItem('daysum'));/* 何回保存したか */
+                var dayname = "";
+                if(!daysum){/* 保存がないとき*/
+                    localStorage.setItem("daysum", 1);/* 保存回数＋１ */
+                    daysum = 1;
+                    localStorage.setItem("day1", saveDate());/* ストレージにお薬情報を保存 */
+                }else {/* 保存が２回目以降の時 */
+                    daysum += 1;/* 保存回数＋１ */
+                    dayname = "day" + daysum;
+                    localStorage.setItem("daysum", daysum);
+                    localStorage.setItem(dayname,  saveDate());
+                }
+            };
 
-        function nbuttan(){ /* ボタン押せない関数 */
-            document.getElementById("nometabuttan").disabled = "disabled";
-        }
-        function ybuttan(){ /* ボタン押せる関数 */
-           document.getElementById("nometabuttan").disabled = null;
-        }
+            /* ボタン押せない関数 */
+            function nbuttan(){ 
+                document.getElementById("nometabuttan").disabled = "disabled";
+            }
+
+             /* ボタン押せる関数 */
+            function ybuttan(){
+                document.getElementById("nometabuttan").disabled = null;
+            }
 
         </script>
     </div>
