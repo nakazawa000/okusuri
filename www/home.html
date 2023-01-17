@@ -9,7 +9,6 @@ drugobject = {/ お薬情報の連想配列 /
     weight: drugweight.value/ 服用量 /
 }
 localStorage.setItem(localsum, JSON.stringify(drugobject));/ ストレージにお薬情報を保存 */
-//document.location.reload(); 画面りとーど
             
 //localStorage.clear(); 
 var drugtototal = 0; /* 薬の飲んだ数*/
@@ -68,8 +67,8 @@ function isSerect(obj){ /* プルダウン処理 */
         object = JSON.parse(localStorage.getItem(serect));/* プルダウンの中身取得 */   
         drugtototal = object.total;/* 各薬の合計 */
         var chkazu = localStorage.getItem('chkazu').split(',');
-        //今日のむ薬の最大値が０以上　または　今日選んだ薬の飲む数が０以上の時
-        if ( Math.max.apply(null, chkazu) > 0 || Number(chkazu[serect-1]) > 0){
+        //今日のむ薬の最大値が1以上　または　今日選んだ薬の飲む数が1以上の時
+        if ( Math.max.apply(null, chkazu) >= 1 || Number(chkazu[serect-1]) >= 1){
             ybuttan();/* ボタン押せる */
         } else {
             nbuttan();
@@ -116,6 +115,19 @@ function daycheck(){
     } 
 };
 
+//1日に何回飲むか..1日1回更新
+function newhairetu(){
+    var localsum = localStorage.getItem('localsum');
+    var object;
+    var chkazu = [];
+    for(var i=1; i<=localsum; i++) {
+        object = JSON.parse(localStorage.getItem(i));
+        chkazu.push(object.taking.length);/* 配列に1日に飲める数を入れる */
+    }
+    localStorage.setItem("daychecksum", localsum);
+    localStorage.setItem("chkazu", chkazu);
+};
+
 //1日に何回飲むか追加
 function addhairetu(){
     var localsum = Number(localStorage.getItem('localsum'));
@@ -126,19 +138,6 @@ function addhairetu(){
         object = JSON.parse(localStorage.getItem(i));
         chkazu += ',' + object.taking.length;
         chkazu = chkazu.split(',');/* 配列に1日に飲める数を入れる */
-    }
-    localStorage.setItem("daychecksum", localsum);
-    localStorage.setItem("chkazu", chkazu);
-};
-
-//1日に何回飲むか..1日1回更新
-function newhairetu(){
-    var localsum = localStorage.getItem('localsum');
-    var object;
-    var chkazu = [];
-    for(var i=1; i<=localsum; i++) {
-        object = JSON.parse(localStorage.getItem(i));
-        chkazu.push(object.taking.length);/* 配列に1日に飲める数を入れる */
     }
     localStorage.setItem("daychecksum", localsum);
     localStorage.setItem("chkazu", chkazu);
